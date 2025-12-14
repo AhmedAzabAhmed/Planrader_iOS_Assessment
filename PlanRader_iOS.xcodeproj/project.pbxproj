@@ -6,6 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		52D831BA2EEE48670085CA6C /* City+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D831B72EEE48670085CA6C /* City+CoreDataProperties.swift */; };
+		52D831BB2EEE48670085CA6C /* WeatherInfo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D831B82EEE48670085CA6C /* WeatherInfo+CoreDataClass.swift */; };
+		52D831BC2EEE48670085CA6C /* WeatherInfo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D831B92EEE48670085CA6C /* WeatherInfo+CoreDataProperties.swift */; };
+		52D831BD2EEE48670085CA6C /* City+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D831B62EEE48670085CA6C /* City+CoreDataClass.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		522345492EECDA0B002AB820 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +34,10 @@
 		522345362EECDA09002AB820 /* PlanRader_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlanRader_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		522345482EECDA0B002AB820 /* PlanRader_iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlanRader_iOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		522345522EECDA0B002AB820 /* PlanRader_iOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlanRader_iOSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		52D831B62EEE48670085CA6C /* City+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "City+CoreDataClass.swift"; sourceTree = "<group>"; };
+		52D831B72EEE48670085CA6C /* City+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "City+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		52D831B82EEE48670085CA6C /* WeatherInfo+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WeatherInfo+CoreDataClass.swift"; sourceTree = "<group>"; };
+		52D831B92EEE48670085CA6C /* WeatherInfo+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WeatherInfo+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -75,6 +86,10 @@
 		5223452D2EECDA09002AB820 = {
 			isa = PBXGroup;
 			children = (
+				52D831B62EEE48670085CA6C /* City+CoreDataClass.swift */,
+				52D831B72EEE48670085CA6C /* City+CoreDataProperties.swift */,
+				52D831B82EEE48670085CA6C /* WeatherInfo+CoreDataClass.swift */,
+				52D831B92EEE48670085CA6C /* WeatherInfo+CoreDataProperties.swift */,
 				522345382EECDA09002AB820 /* PlanRader_iOS */,
 				5223454B2EECDA0B002AB820 /* PlanRader_iOSTests */,
 				522345552EECDA0B002AB820 /* PlanRader_iOSUITests */,
@@ -236,6 +251,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52D831BA2EEE48670085CA6C /* City+CoreDataProperties.swift in Sources */,
+				52D831BB2EEE48670085CA6C /* WeatherInfo+CoreDataClass.swift in Sources */,
+				52D831BC2EEE48670085CA6C /* WeatherInfo+CoreDataProperties.swift in Sources */,
+				52D831BD2EEE48670085CA6C /* City+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -395,8 +414,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 45X4FRC2JK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "PlanRader-iOS-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -422,8 +443,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 45X4FRC2JK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "PlanRader-iOS-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

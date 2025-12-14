@@ -13,7 +13,7 @@ struct PlanRader_iOSApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            CityView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
