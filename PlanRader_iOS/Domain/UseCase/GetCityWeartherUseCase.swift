@@ -8,18 +8,18 @@
 import Foundation
 
 protocol GetCityWeatherUseCaseProtocol {
-    func getCityWearther(by cityName: String) async throws -> WeatherResponse
+    func fetchCities(sortedBy sortOption: SortOption) -> [City]
 }
 
 final class GetCityWeatherUseCase: GetCityWeatherUseCaseProtocol {
-    let repo: CityWeatherRepoProtocol
+    let context = PersistenceController.shared.container.viewContext
+    private var dataManager: WeatherDataManager
     
-    init(repo: CityWeatherRepoProtocol = CityWeatherRepo()) {
-        self.repo = repo
+    init() {
+        dataManager = WeatherDataManager(context: context)
     }
     
-    func getCityWearther(by cityName: String) async throws -> WeatherResponse
-    {
-        try await repo.getCityWearther(by: cityName)
+    func fetchCities(sortedBy sortOption: SortOption) -> [City] {
+        dataManager.fetchCities(sortedBy: sortOption)
     }
 }

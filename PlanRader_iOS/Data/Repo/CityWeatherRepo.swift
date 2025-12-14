@@ -30,7 +30,6 @@ final class CityWeatherRepo: CityWeatherRepoProtocol {
     }
 }
 
-@Observable
 class WeatherDataManager {
     private let context: NSManagedObjectContext
     private let repo: CityWeatherRepoProtocol
@@ -141,6 +140,6 @@ class WeatherDataManager {
 }
 
 enum SortOption: String, CaseIterable {
-case latest = "Latest"
-case oldest = "Oldest"
+    case latest = "Latest"
+    case oldest = "Oldest"
 }

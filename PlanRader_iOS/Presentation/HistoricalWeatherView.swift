@@ -50,7 +50,7 @@ struct HistoricalWeatherView: View {
                 }
             }
         }
-        .navigationTitle("History - \(city.name)")
+        .navigationTitle("History - \(city.name ?? "")")
         .navigationBarTitleDisplayMode(.inline)
     }
 }

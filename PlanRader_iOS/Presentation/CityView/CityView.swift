@@ -9,24 +9,12 @@ import SwiftUI
 import CoreData
 
 struct CityView: View {
-    @Environment(\.managedObjectContext) private var viewContext
-    @State private var dataManager: WeatherDataManager
-    @State private var cities: [City] = []
-    @State private var showAddCityAlert = false
-    @State private var newCityName = ""
-    @State private var sortOption: SortOption = .latest
-    @State private var errorMessage: String?
-    @State private var showError = false
-    
-    init() {
-        let context = PersistenceController.shared.container.viewContext
-        dataManager = WeatherDataManager(context: context)
-    }
+    @State var viewModel = CityWeatherViewModel()
     
     var body: some View {
         NavigationView {
             ZStack {
-                if cities.isEmpty {
+                if viewModel.cities.isEmpty {
                     VStack(spacing: 16) {
                         Image(systemName: "cloud.sun.fill")
                             .font(.system(size: 60))
@@ -40,7 +28,7 @@ struct CityView: View {
                     }
                 } else {
                     List {
-                        ForEach(cities, id: \.objectID) { city in
+                        ForEach(viewModel.cities, id: \.objectID) { city in
                             NavigationLink(destination: WeatherDetailView(city: city)) {
                                 HStack {
                                     Text(city.name ?? "")
@@ -56,7 +44,7 @@ struct CityView: View {
                                 }
                             }
                         }
-                        .onDelete(perform: deleteCities)
+                        .onDelete(perform: viewModel.deleteCities)
                     }
                 }
             }
@@ -66,12 +54,12 @@ struct CityView: View {
                     Menu {
                         ForEach(SortOption.allCases, id: \.self) { option in
                             Button(action: {
-                                sortOption = option
-                                loadCities()
+                                viewModel.sortOption = option
+                                viewModel.loadCities()
                             }) {
                                 HStack {
                                     Text(option.rawValue)
-                                    if sortOption == option {
+                                    if viewModel.sortOption == option {
                                         Image(systemName: "checkmark")
                                     }
                                 }
@@ -84,62 +72,32 @@ struct CityView: View {
                 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
-                        showAddCityAlert = true
+                        viewModel.showAddCityAlert = true
                     }) {
                         Image(systemName: "plus")
                     }
                 }
             }
-            .alert("Add City", isPresented: $showAddCityAlert) {
-                TextField("City Name", text: $newCityName)
+            .alert("Add City", isPresented: $viewModel.showAddCityAlert) {
+                TextField("City Name", text: $viewModel.newCityName)
                     .autocapitalization(.words)
                 Button("Cancel", role: .cancel) {
-                    newCityName = ""
+                    viewModel.newCityName = ""
                 }
                 Button("Add") {
-                    addCity()
+                    viewModel.addCity()
                 }
             } message: {
                 Text("Enter the name of the city")
             }
-            .alert("Error", isPresented: $showError) {
+            .alert("Error", isPresented: $viewModel.showError) {
                 Button("OK", role: .cancel) {}
             } message: {
-                Text(errorMessage ?? "An unknown error occurred")
+                Text(viewModel.errorMessage ?? "An unknown error occurred")
             }
             .onAppear {
-                loadCities()
+                viewModel.loadCities()
             }
         }
-    }
-    
-    private func loadCities() {
-        cities = dataManager.fetchCities(sortedBy: sortOption)
-    }
-    
-    private func addCity() {
-        guard !newCityName.isEmpty else { return }
-        
-        do {
-            try dataManager.addCity(name: newCityName)
-            loadCities()
-            newCityName = ""
-        } catch {
-            errorMessage = error.localizedDescription
-            showError = true
-        }
-    }
-    
-    private func deleteCities(at offsets: IndexSet) {
-        for index in offsets {
-            let city = cities[index]
-            do {
-                try dataManager.deleteCity(city)
-            } catch {
-                errorMessage = error.localizedDescription
-                showError = true
-            }
-        }
-        loadCities()
     }
 }

@@ -8,32 +8,25 @@
 import SwiftUI
 
 struct WeatherDetailView: View {
-    @Environment(\.managedObjectContext) private var viewContext
-    @State private var dataManager: WeatherDataManager
     
+    @State var viewModel: WeatherDetailViewModel
     let city: City
-    
-    @State private var weatherInfo: WeatherInfo?
-    @State private var isLoading = false
-    @State private var errorMessage: String?
-    @State private var showError = false
     
     init(city: City) {
         self.city = city
-        let context = PersistenceController.shared.container.viewContext
-        dataManager = WeatherDataManager(context: context)
+        viewModel = WeatherDetailViewModel(city: city)
     }
     
     var body: some View {
         ZStack {
-            if isLoading {
+            if viewModel.isLoading {
                 VStack(spacing: 16) {
                     ProgressView()
                         .scaleEffect(1.5)
                     Text("Fetching weather...")
                         .foregroundColor(.secondary)
                 }
-            } else if let weather = weatherInfo {
+            } else if let weather = viewModel.weatherInfo {
                 ScrollView {
                     VStack(spacing: 24) {
                         // City name header
@@ -43,7 +36,7 @@ struct WeatherDetailView: View {
                         
                         // Weather icon and description
                         VStack(spacing: 8) {
-                            Image(systemName: weatherIconName(for: weather.weatherDescription ?? ""))
+                            Image(systemName: viewModel.weatherIconName(for: weather.weatherDescription ?? ""))
                                 .font(.system(size: 80))
                                 .foregroundColor(.blue)
                             
@@ -70,7 +63,7 @@ struct WeatherDetailView: View {
                             WeatherDetailRow(
                                 icon: "clock.fill",
                                 title: "Last Updated",
-                                value: formatDate(weather.requestDate ?? Date())
+                                value: viewModel.formatDate(weather.requestDate ?? Date())
                             )
                         }
                         .padding()
@@ -103,52 +96,13 @@ struct WeatherDetailView: View {
         }
         .navigationTitle("Weather Details")
         .navigationBarTitleDisplayMode(.inline)
-        .alert("Error", isPresented: $showError) {
+        .alert("Error", isPresented: $viewModel.showError) {
             Button("OK", role: .cancel) {}
         } message: {
-            Text(errorMessage ?? "An unknown error occurred")
+            Text(viewModel.errorMessage ?? "An unknown error occurred")
         }
         .task {
-            await fetchWeather()
+            await viewModel.fetchWeather()
         }
     }
-    
-    private func fetchWeather() async {
-        isLoading = true
-        
-        do {
-            let info = try await dataManager.fetchAndSaveWeather(for: city)
-            weatherInfo = info
-        } catch {
-            errorMessage = error.localizedDescription
-            showError = true
-        }
-        
-        isLoading = false
-    }
-    
-    private func weatherIconName(for description: String) -> String {
-        let lowercased = description.lowercased()
-        if lowercased.contains("rain") {
-            return "cloud.rain.fill"
-        } else if lowercased.contains("cloud") {
-            return "cloud.fill"
-        } else if lowercased.contains("clear") || lowercased.contains("sun") {
-            return "sun.max.fill"
-        } else if lowercased.contains("snow") {
-            return "snow"
-        } else if lowercased.contains("thunder") {
-            return "cloud.bolt.fill"
-        } else {
-            return "cloud.sun.fill"
-        }
-    }
-    
-    private func formatDate(_ date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .short
-        return formatter.string(from: date)
-    }
-    
 }
